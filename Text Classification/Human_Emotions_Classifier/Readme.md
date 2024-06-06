@@ -44,7 +44,7 @@
 
 - Below is the Confusion Matrix:
 
-![Confusion_Matrix_Logistic]()
+![Confusion_Matrix_Logistic](https://github.com/Pratik872/Transformers/blob/main/Text%20Classification/Human_Emotions_Classifier/readme_resources/logistic_cm.png)
 
 ### Fine-Tuning Distil-BERT
 
@@ -55,6 +55,8 @@
 - Got Accuracy 93% and F1 score as 92.5%
 
 - Below is the Confusion Matrix:
+
+![CM_Distil](https://github.com/Pratik872/Transformers/blob/main/Text%20Classification/Human_Emotions_Classifier/readme_resources/DistilBERT_finetuned_cm.png)
 
 
 ### Built with 🛠️
