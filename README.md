@@ -11,7 +11,7 @@ _Note: Data used in the projects is for demonstration purposes only._
 
 - ### Projects:
 
-- [Text Classification](https://github.com/Pratik872/Transformers/tree/main/Text Classification): This folder has all the Text Classification used cases using Transformers.
+- [Text Classification](https://github.com/Pratik872/Transformers/tree/main/Text%20Classification): This folder has all the Text Classification used cases using Transformers.
 
 
 
