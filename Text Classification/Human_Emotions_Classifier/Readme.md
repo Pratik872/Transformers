@@ -6,55 +6,59 @@
 	- The target labels i.e emotions were 'sadness', 'joy', 'love', 'anger', 'fear', 'surprise'.
 
 ## Problem Objective
-- To build a model which predict the prices of flight using a dataset
+- To build a model which classifies human emotions based on the tweet they post.
 
 ## Methodology
 
 ### EDA (Exploratory Data Analysis)
-- I have plotted various graphs to visualize the data. Some of them are as follows : 
+- I have used plots to visualize the data.
 
-![PriceVsAirline](https://github.com/Pratik872/ML/blob/main/E2E%20Project/FlightFarePredictor/readme_resources/AirlineVsPrice.png)
-![PriceVsDest](https://github.com/Pratik872/ML/blob/main/E2E%20Project/FlightFarePredictor/readme_resources/DestinationVsPrice.png)
-![PriceVsSource](https://github.com/Pratik872/ML/blob/main/E2E%20Project/FlightFarePredictor/readme_resources/SourceVsPrice.png)
-![PriceVsStops](https://github.com/Pratik872/ML/blob/main/E2E%20Project/FlightFarePredictor/readme_resources/StopsVsPrice.png)
+![Class_Frequencies](https://github.com/Pratik872/Transformers/blob/main/Text%20Classification/Human_Emotions_Classifier/readme_resources/class_frequencies.png)
 
-- Required Graphs are plotted using seaborn,matplotlib libraries.
+- As we see above, there is imbalance in the data.'Joy' and 'Sadness' classes are high and 'surprise' and 'love' are comparatively low.
 
-- Also heatmap is plotted for checking the corelation between target and predictor variables.
-![Heatmap](https://github.com/Pratik872/ML/blob/main/E2E%20Project/FlightFarePredictor/readme_resources/heatmap.png)
 
-### Feature Engineering
-- I have derived many useful features from existing features so that I can use them in my model. You can check the notebook attached.
+![Words_per_Tweet](https://github.com/Pratik872/Transformers/blob/main/Text%20Classification/Human_Emotions_Classifier/readme_resources/words_per_tweet.png)
 
-- I have handled categorical variables i.e nominal ar well as ordinal by using one-hot-encoding and label encoding whereever necessary.
+- The maximum context size of DistilBERT model is 512. We have checked above if we have sentences whose token are more than 512. In this dataset, maximum token size doesn't exceed 90. So no need to truncate.
 
-### Feature Selection
-- I have used ExtraTreesRegressor for checking feature importances.
+- Required Plots are plotted using matplotlib package.
 
-- I have also used barplot for visualising them:
-![Feature_Imp](https://github.com/Pratik872/ML/blob/main/E2E%20Project/FlightFarePredictor/readme_resources/feature%20importances.png)
+### Tokenization
+- I have tried to implement Character Level, Word Level and Sub-Word level i.e WordPiece used by BERT variants. 
 
-### Model Making
+- WordPiece level better suits this used case as it preserves stucture as well as meanings of the tokens.
 
-- I have built a RandomForestRegressor model with default hyperparameters initially.
+- Implemented a 'distilbert-base-uncased' tokenizer to tokenize and form input ids for the data.
 
-- I chose this model just because I thought ensemble model would work better. But you can try different models too.
+## <b>Note: </b>Transformers can be used as feature extractors and can be fine-tuned as well. I have implemented both and tried to compare the results
 
-### Hyper-Parameter Tuning
+### Transformers as Feature Extractors (just training a classification head keeping hidden states frozen)
+- Extracted the hidden states of pre-trained model
 
-- I have tuned the hyperparameters 'n_estimators', 'max_depth', 'max_features' by using RandomisedSearchCV. I used  this because this works faster than GridSearchCV.
+- Used those hidden states i.e features to train a Logistic Regression Classifier
 
-- I again built a RF model with best hyper-parameters selected from CV.
+- Used hidden state of last '<CLS>' token and passed as an input to logistic classifier
 
-### Metrics
+- Got an accuracy of 63%
 
-- I have used 'r2_score' as my metric here. You can use any different metric for regression.
+- Below is the Confusion Matrix:
 
-- Further I have plotted and checked error terms also to check whether they are normally distributed around 0.
+![Confusion_Matrix_Logistic]()
+
+### Fine-Tuning Distil-BERT
+
+- Fine tuned Distil-BERT with Trainer API
+
+- Batch size of 64, 2 epochs and learning rate as 2e-5
+
+- Got Accuracy 93% and F1 score as 92.5%
+
+- Below is the Confusion Matrix:
 
 
 ### Built with 🛠️
-- Packages/Repo : Pandas,Numpy,Seaborn,Matplotlib,Sklearn,Flask,Pickle,Git
+- Packages/Repo : Hugging Face, Transformers, Pandas, Numpy, Matplotlib, Sklearn, Git
 
 - Dataset : Hugging Face Hub
 
